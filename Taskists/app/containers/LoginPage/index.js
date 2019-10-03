@@ -1,6 +1,6 @@
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import React from 'react';
-import './style.css';
+import  './style.css';
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
