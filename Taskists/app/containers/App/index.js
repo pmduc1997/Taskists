@@ -12,7 +12,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
-import UserPage from 'containers/Users/Loadable'
+import ProjectAdd from 'containers/ProjectAdd/Loadable';
+import ProjectList from 'containers/ProjectList/Loadable';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -25,6 +26,8 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/users" component={UserPage} />
+        <Route exact path="/projectAdd" component={ProjectAdd} />
+        <Route exact path="/projectList" component={ProjectList} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

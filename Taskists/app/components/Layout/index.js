@@ -13,7 +13,9 @@ export default class LayoutStyle extends React.Component {
         </Sider>
         <Layout>
           <Header />
-          <Content /> 
+          <Content> 
+          {this.props.children}
+          </Content>
           <Footer />
         </Layout>
       </Layout>
