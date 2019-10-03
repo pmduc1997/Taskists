@@ -16,7 +16,7 @@ export default class SiderStyle extends React.Component{
       }}
     >
       <div className="logo" />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
         <Menu.Item key="1">
         <Icon type="folder" />
           <span className="nav-text">Projects</span>
