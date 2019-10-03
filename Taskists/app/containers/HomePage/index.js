@@ -14,6 +14,7 @@ import SiderStyle from '../../components/Sider/index';
 export default function HomePage() {
   return (
     <SiderStyle>
+      <CardStyle></CardStyle>
     </SiderStyle>
   );
 }
