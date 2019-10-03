@@ -1,2 +1,6 @@
 export const API_PROJECTS = '/api';
-export const API_USERS = '/users';
+
+
+//USERS
+export const API_USERS = '/api';
+
