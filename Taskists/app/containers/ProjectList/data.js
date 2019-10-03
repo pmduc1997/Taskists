@@ -4,14 +4,14 @@ export const columns = [
         dataIndex: 'projectName',
         // specify the condition of filtering result
         // here is that finding the name started with `value`
-        sorter: (a, b) => a.projectName.length - b.projectName.length,
+        sorter: (a, b) => a.projectName - b.projectName,
         sortDirections: ['descend', 'ascend'],
     },
     {
         title: 'Description',
         dataIndex: 'description',
-        sorter: (a, b) => a.description.length - b.description.length,
-        sortDirections: ['descend', 'ascend'],
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.description - b.description,
     },
     {
         title: 'Status',

@@ -1,15 +1,17 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Button, Icon } from 'antd';
 const { Content } = Layout;
 
 import Table from '../Table/index'
+import { columns, data } from '../../containers/HomePage/data'
 
-export default class ContentStyle extends React.Component{
-    render(){
-        return(
+export default class ContentStyle extends React.Component {
+  render() {
+    return (
       <Content style={{ margin: '24px 16px 0' }}>
-        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}><Table /></div>
+        {this.props.children}
       </Content>
-        )
-    }
+    )
+  }
 }
+
