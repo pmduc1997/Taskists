@@ -6,15 +6,11 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import CardStyle from '../../components/Card/index'
-import SiderStyle from '../../components/Sider/index';
+import Layout from '../../components/Layout/index';
 
 export default function HomePage() {
   return (
-    <SiderStyle>
-      <CardStyle></CardStyle>
-    </SiderStyle>
+    <Layout>
+    </Layout>
   );
 }
