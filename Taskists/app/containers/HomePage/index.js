@@ -15,5 +15,5 @@ export default function HomePage() {
   return (
     <SiderStyle>
     </SiderStyle>
-  );
+  ); 
 }
