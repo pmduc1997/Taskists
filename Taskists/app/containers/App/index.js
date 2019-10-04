@@ -14,6 +14,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import ProjectAdd from 'containers/ProjectAdd/Loadable';
 import ProjectList from 'containers/ProjectList/Loadable';
+import ProjectDetail from 'containers/ProjectDetail/Loadable';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -27,6 +28,7 @@ export default function App() {
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/projectAdd" component={ProjectAdd} />
         <Route exact path="/projectList" component={ProjectList} />
+        <Route exact path="/projectDetail" component={ProjectDetail} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
