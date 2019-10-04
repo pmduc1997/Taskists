@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import React from 'react'
 import ProjectList from '../ProjectList/index'
 import Layout from '../../components/Layout/index';
-
+const { TextArea } = Input;
 
 export default class ProjectDetail extends React.Component {
     render() {
@@ -101,7 +101,7 @@ class DynamicFieldSet extends React.Component {
         const formItems = keys.map((k, index) => (
             <Form.Item
                 {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                label={index === 0 ? 'Passengers' : ''}
+                label={index === 0 ? 'Task' : ''}
                 required={false}
                 key={k}
             >
@@ -114,7 +114,7 @@ class DynamicFieldSet extends React.Component {
                             message: "Please input passenger's name or delete this field.",
                         },
                     ],
-                })(<Input placeholder="passenger name" style={{ width: '60%', marginRight: 8 }} />)}
+                })(<TextArea rows={3} placeholder="What needs to be done ?" style={{ width: '80%', marginRight: 8 }} />)}
                 {keys.length > 1 ? (
                     <Icon
                         className="dynamic-delete-button"
@@ -122,20 +122,21 @@ class DynamicFieldSet extends React.Component {
                         onClick={() => this.remove(k)}
                     />
                 ) : null}
+                {
+                    <Icon className="dynamic-delete-button"
+                        type="arrow-right"
+                        onClick={() => this.remove(k)}
+                    />
+                }
             </Form.Item>
         ));
         return (
             <Form onSubmit={this.handleSubmit}>
                 {formItems}
                 <Form.Item {...formItemLayoutWithOutLabel}>
-                    <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
-                        <Icon type="plus" /> Add field
-          </Button>
-                </Form.Item>
-                <Form.Item {...formItemLayoutWithOutLabel}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-          </Button>
+                    <Button type="dashed" onClick={this.add} style={{ width: '80%' }}>
+                        <Icon type="plus" /> Create Task
+                    </Button>
                 </Form.Item>
             </Form>
         );
