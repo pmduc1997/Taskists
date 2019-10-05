@@ -4,8 +4,102 @@ import React from 'react'
 import ProjectList from '../ProjectList/index'
 import Layout from '../../components/Layout/index';
 const { TextArea } = Input;
-
+import Modal from '../../components/Modal/index'
+import TaskAdd from '../TaskAdd/index'
+import TaskList from '../TaskList/index'
+import { taskData } from "./data";
+var pendingTask, inProgressTask, resolvedTask, closedTask
 export default class ProjectDetail extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            //modal related
+            titleModal: '',
+            showModal: false,
+            //task list related
+            pendingTask: [],
+            inProgressTask: [],
+            resolvedTask: [],
+            closedTask: [],
+        };
+    }
+    
+    componentDidMount() {
+        this.filterTaskData()
+    }
+
+    filterTaskData() {
+        pendingTask = taskData.filter(task => task.status == 'pending');
+        inProgressTask = taskData.filter(task => task.status == 'inProgress');
+        resolvedTask = taskData.filter(task => task.status == 'resolved');
+        closedTask = taskData.filter(task => task.status == 'closed');
+        this.setState({
+            pendingTask: pendingTask,
+            inProgressTask: inProgressTask
+        })
+    }
+
+    _doBeginTask(task) {
+        //khai báo biến
+        let { pendingTask, inProgressTask, } = this.state;
+        //thực hiện thay đổi mảng
+        if (pendingTask.indexOf(task) !== -1) {
+            //xóa phần tử khỏi pending
+            pendingTask.splice(pendingTask.indexOf(task), 1);
+            //thêm phần tử vào in progress
+            inProgressTask.push(task);
+            //render lại
+            this.setState({
+                pendingTask: pendingTask,
+                inProgressTask: inProgressTask
+            })
+        }
+    }
+
+    _doResolveTask(task) {
+        //khai báo biến
+        let { pendingTask, inProgressTask, } = this.state;
+        //thực hiện thay đổi mảng
+        if (pendingTask.indexOf(task) !== -1) {
+            //xóa phần tử khỏi pending
+            pendingTask.splice(pendingTask.indexOf(task), 1);
+            //thêm phần tử vào in progress
+            inProgressTask.push(task);
+            //render lại
+            this.setState({
+                pendingTask: pendingTask,
+                inProgressTask: inProgressTask
+            })
+        }
+    }
+
+    _doCloseTask(task) {
+        //khai báo biến
+        let { pendingTask, inProgressTask, } = this.state;
+        //thực hiện thay đổi mảng
+        if (pendingTask.indexOf(task) !== -1) {
+            //xóa phần tử khỏi pending
+            pendingTask.splice(pendingTask.indexOf(task), 1);
+            //thêm phần tử vào in progress
+            inProgressTask.push(task);
+            //render lại
+            this.setState({
+                pendingTask: pendingTask,
+                inProgressTask: inProgressTask
+            })
+        }
+    }
+
+    //---------modal start----------
+    showModal = () => {
+        this.setState({
+            titleModal: 'Create Task',
+            showModal: true
+        })
+    }
+    hideModal = () => this.setState({ showModal: false });
+    //----------modal end-----------
+
     render() {
         return (
             <Layout>
@@ -15,17 +109,28 @@ export default class ProjectDetail extends React.Component {
                         <Route exact path="/projectList" component={ProjectList} />
                     </Switch>
                     <Row gutter={16}>
-                        <Col span={8}>
+                        <Col span={6}>
                             <Card title="Pending" >
-                                <WrappedDynamicFieldSet />
+                                <Modal title={this.state.title} visible={this.state.showModal} onClose={this.hideModal}><TaskAdd /></Modal>
+                                <TaskList taskData={pendingTask} onBegin={this._doBeginTask.bind(this)} />
+                                <Button type="dashed" style={{ width: '100%' }} onClick={this.showModal}>
+                                    <Icon type="plus" /> Create Task
+                                </Button>
                             </Card>
                         </Col>
-                        <Col span={8}>
+                        <Col span={6}>
                             <Card title="In progress">
+                                <TaskList taskData={inProgressTask} onResolve={this._doResolveTask.bind(this)} />
                             </Card>
                         </Col>
-                        <Col span={8}>
-                            <Card title="Done">
+                        <Col span={6}>
+                            <Card title="Resolved">
+                                <TaskList taskData={resolvedTask} onClose={this._doCloseTask.bind(this)} ></TaskList>
+                            </Card>
+                        </Col>
+                        <Col span={6}>
+                            <Card title="Closed">
+                                <TaskList taskData={closedTask}></TaskList>
                             </Card>
                         </Col>
                     </Row>
@@ -34,113 +139,3 @@ export default class ProjectDetail extends React.Component {
         )
     }
 }
-
-
-
-let id = 0;
-
-class DynamicFieldSet extends React.Component {
-    remove = k => {
-        const { form } = this.props;
-        // can use data-binding to get
-        const keys = form.getFieldValue('keys');
-        // We need at least one passenger
-        if (keys.length === 1) {
-            return;
-        }
-
-        // can use data-binding to set
-        form.setFieldsValue({
-            keys: keys.filter(key => key !== k),
-        });
-    };
-
-    add = () => {
-        const { form } = this.props;
-        // can use data-binding to get
-        const keys = form.getFieldValue('keys');
-        const nextKeys = keys.concat(id++);
-        // can use data-binding to set
-        // important! notify form to detect changes
-        form.setFieldsValue({
-            keys: nextKeys,
-        });
-    };
-
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const { keys, names } = values;
-                console.log('Received values of form: ', values);
-                console.log('Merged values:', keys.map(key => names[key]));
-            }
-        });
-    };
-
-    render() {
-        const { getFieldDecorator, getFieldValue } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 4 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 20 },
-            },
-        };
-        const formItemLayoutWithOutLabel = {
-            wrapperCol: {
-                xs: { span: 24, offset: 0 },
-                sm: { span: 20, offset: 4 },
-            },
-        };
-        getFieldDecorator('keys', { initialValue: [] });
-        const keys = getFieldValue('keys');
-        const formItems = keys.map((k, index) => (
-            <Form.Item
-                {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                label={index === 0 ? 'Task' : ''}
-                required={false}
-                key={k}
-            >
-                {getFieldDecorator(`names[${k}]`, {
-                    validateTrigger: ['onChange', 'onBlur'],
-                    rules: [
-                        {
-                            required: true,
-                            whitespace: true,
-                            message: "Please input passenger's name or delete this field.",
-                        },
-                    ],
-                })(<TextArea rows={3} placeholder="What needs to be done ?" style={{ width: '80%', marginRight: 8 }} />)}
-                {keys.length > 1 ? (
-                    <Icon
-                        className="dynamic-delete-button"
-                        type="minus-circle-o"
-                        onClick={() => this.remove(k)}
-                    />
-                ) : null}
-                {
-                    <Icon className="dynamic-delete-button"
-                        type="arrow-right"
-                        onClick={() => this.remove(k)}
-                    />
-                }
-            </Form.Item>
-        ));
-        return (
-            <Form onSubmit={this.handleSubmit}>
-                {formItems}
-                <Form.Item {...formItemLayoutWithOutLabel}>
-                    <Button type="dashed" onClick={this.add} style={{ width: '80%' }}>
-                        <Icon type="plus" /> Create Task
-                    </Button>
-                </Form.Item>
-            </Form>
-        );
-    }
-}
-
-const WrappedDynamicFieldSet = Form.create({ name: 'dynamic_form_item' })(DynamicFieldSet);

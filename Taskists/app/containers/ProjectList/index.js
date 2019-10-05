@@ -22,12 +22,12 @@ export default class ProjectList extends Component {
     this.state = {
       title: ''
     };
-}
+  }
 
-  showModal(){
+  showModal() {
     this.setState({
       title: 'Test'
-  })
+    })
   }
   async componentDidMount() {
     let projects = await sf.getService('ProjectServices').getProjects();
@@ -45,7 +45,7 @@ export default class ProjectList extends Component {
           <Button onClick={this.showModal.bind(this)}>Test modal</Button>
           <Table />
         </div>
-<Modal title={this.state.title}><p>bum</p></Modal>
+        <Modal title={this.state.title}><p>bum</p></Modal>
       </Layout>
     );
   }
