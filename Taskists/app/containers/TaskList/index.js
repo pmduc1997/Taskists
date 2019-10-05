@@ -15,8 +15,14 @@ export default class ProjectDetail extends React.Component {
 
     //chuyển task từ in progress sang resolved
     resolveTask = (item) => {
-        item.status = 'inProgress';
-        this.props.onBegin(item);
+        item.status = 'resolved';
+        this.props.onResolve(item);
+    }
+
+    //chuyển task từ in progress sang resolved
+    closeTask = (item) => {
+        item.status = 'closed';
+        this.props.onClose(item);
     }
     render() {
         const { taskData } = this.props
@@ -29,7 +35,7 @@ export default class ProjectDetail extends React.Component {
                         [<a key="list-loadmore-edit">edit</a>,
                         this.props.onBegin ? <a onClick={this.beginTask.bind(this, item)} key="list-loadmore-more">begin</a>
                         :this.props.onResolve ? <a onClick={this.resolveTask.bind(this, item)} key="list-loadmore-more">resolve</a>
-                        :this.props.onClose ? <a onClick={this.resolveTask.bind(this, item)} key="list-loadmore-more">close</a>
+                        :this.props.onClose ? <a onClick={this.closeTask.bind(this, item)} key="list-loadmore-more">close</a>
                         :<Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
                         ]}>
                         <List.Item.Meta

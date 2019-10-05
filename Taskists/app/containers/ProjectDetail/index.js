@@ -23,7 +23,7 @@ export default class ProjectDetail extends React.Component {
             closedTask: [],
         };
     }
-    
+
     componentDidMount() {
         this.filterTaskData()
     }
@@ -35,7 +35,9 @@ export default class ProjectDetail extends React.Component {
         closedTask = taskData.filter(task => task.status == 'closed');
         this.setState({
             pendingTask: pendingTask,
-            inProgressTask: inProgressTask
+            inProgressTask: inProgressTask,
+            resolvedTask: resolvedTask,
+            closedTask: closedTask,
         })
     }
 
@@ -58,34 +60,34 @@ export default class ProjectDetail extends React.Component {
 
     _doResolveTask(task) {
         //khai báo biến
-        let { pendingTask, inProgressTask, } = this.state;
+        let { inProgressTask, resolvedTask, } = this.state;
         //thực hiện thay đổi mảng
-        if (pendingTask.indexOf(task) !== -1) {
-            //xóa phần tử khỏi pending
-            pendingTask.splice(pendingTask.indexOf(task), 1);
-            //thêm phần tử vào in progress
-            inProgressTask.push(task);
+        if (inProgressTask.indexOf(task) !== -1) {
+            //xóa phần tử khỏi inProgress
+            inProgressTask.splice(inProgressTask.indexOf(task), 1);
+            //thêm phần tử vào Resolved
+            resolvedTask.push(task);
             //render lại
             this.setState({
-                pendingTask: pendingTask,
-                inProgressTask: inProgressTask
+                inProgressTask: inProgressTask,
+                resolvedTask: resolvedTask
             })
         }
     }
 
     _doCloseTask(task) {
         //khai báo biến
-        let { pendingTask, inProgressTask, } = this.state;
+        let { resolvedTask, closedTask, } = this.state;
         //thực hiện thay đổi mảng
-        if (pendingTask.indexOf(task) !== -1) {
-            //xóa phần tử khỏi pending
-            pendingTask.splice(pendingTask.indexOf(task), 1);
-            //thêm phần tử vào in progress
-            inProgressTask.push(task);
+        if (resolvedTask.indexOf(task) !== -1) {
+            //xóa phần tử khỏi resolved
+            resolvedTask.splice(resolvedTask.indexOf(task), 1);
+            //thêm phần tử vào closed
+            closedTask.push(task);
             //render lại
             this.setState({
-                pendingTask: pendingTask,
-                inProgressTask: inProgressTask
+                resolvedTask: resolvedTask,
+                closedTask: closedTask
             })
         }
     }
