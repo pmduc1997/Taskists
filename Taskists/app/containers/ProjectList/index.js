@@ -14,8 +14,21 @@ import { Button, Icon } from 'antd';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import ProjectAdd from '../ProjectAdd'
 import ProjectDetail from '../ProjectDetail'
+import Modal from '../../components/Modal/index'
 export default class ProjectList extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: ''
+    };
+}
+
+  showModal(){
+    this.setState({
+      title: 'Test'
+  })
+  }
   async componentDidMount() {
     let projects = await sf.getService('ProjectServices').getProjects();
     console.log("projects", projects)
@@ -29,8 +42,10 @@ export default class ProjectList extends Component {
             <Link to="/projectAdd"><Button>Add Project</Button></Link>
             <Link to="/projectDetail"><Button>Detail Project</Button></Link>
           </Router>
+          <Button onClick={this.showModal.bind(this)}>Test modal</Button>
           <Table />
         </div>
+<Modal title={this.state.title}><p>bum</p></Modal>
       </Layout>
     );
   }

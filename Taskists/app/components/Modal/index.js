@@ -22,24 +22,20 @@ export default class ModalStyle extends React.Component {
       visible: false,
     });
   };
-
+  componentWillReceiveProps(){
+    this.showModal()
+  }
   render() {
+    const {title} = this.props
     return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>
-          Open Modal
-        </Button>
         <Modal
-          title="Basic Modal"
+          title={title}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          {this.props.children}
         </Modal>
-      </div>
     );
   }
 }
