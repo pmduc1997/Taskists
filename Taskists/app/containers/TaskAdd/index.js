@@ -8,15 +8,19 @@
 import React, { Component } from 'react';
 import sf from '../../services/serviceFactory';
 
-import { Button } from 'antd';
-import {
-    Form,
-    Input,
-} from 'antd';
+import { Button, Icon, Form, Input, Menu, Cascader } from 'antd';
 
 class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
+        users: [
+            {
+                username: 'pmdu',
+            },
+            {
+                username: 'huygei',
+            },
+        ]
     };
 
     handleSubmit = e => {
@@ -32,6 +36,8 @@ class RegistrationForm extends React.Component {
         const { value } = e.target;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     };
+
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -57,7 +63,13 @@ class RegistrationForm extends React.Component {
                 },
             },
         };
+        function onChange(value, selectedOptions) {
+            console.log(value, selectedOptions);
+        }
 
+        function filter(inputValue, path) {
+            return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        }
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                 <Form.Item label="Task Name">
@@ -80,7 +92,15 @@ class RegistrationForm extends React.Component {
                     {getFieldDecorator('assignTo', {
                         rules: [
                         ],
-                    })(<Input />)}
+                    })(
+                        <Cascader
+                            fieldNames={{ label: 'username', value: 'username' }}
+                            options={this.state.users}
+                            onChange={onChange}
+                            placeholder="Please select"
+                            showSearch={{ filter }}
+                        />
+                    )}
                 </Form.Item>
                 <Form.Item label="Estimate Time">
                     {getFieldDecorator('estimateHour', {
