@@ -17,7 +17,7 @@ import ProjectList from 'containers/ProjectList/Loadable';
 import ProjectDetail from 'containers/ProjectDetail/Loadable';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-
+import UserDashboard from '../UserDashboardd/Loadable';
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
@@ -29,6 +29,7 @@ export default function App() {
         <Route exact path="/projectAdd" component={ProjectAdd} />
         <Route exact path="/projectList" component={ProjectList} />
         <Route exact path="/projectDetail" component={ProjectDetail} />
+        <Route exact path="/userDashboard" component={UserDashboard} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
