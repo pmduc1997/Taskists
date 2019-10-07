@@ -1,9 +1,9 @@
 import ProjectServices from './projectServices';
-// import UserServices from './usertServices';
+import UserServices from './userServices';
 
 const SERVICES = {
     ProjectServices,
-    // UserServices
+    UserServices
 }
 
 const instance = {};
